@@ -58,6 +58,16 @@ public:
         gpio_init_out_ex(&gpio, pin, value);
     }
 
+    /** Create a DigitalOut connected to the specified pin
+     *
+     *  @param pin DigitalOut pin to connect to
+     *  @param mode if the pin should have pullups/pulldowns enabled
+     *  @param value the initial pin value
+     */
+    DigitalOut(PinName pin, PinMode mode, int value) : gpio() {
+        gpio_init_inout(&gpio, pin, PIN_OUTPUT, mode, value);
+    }
+
     /** Set the output, specified as 0 or 1 (int)
      *
      *  @param value An integer specifying the pin output value,

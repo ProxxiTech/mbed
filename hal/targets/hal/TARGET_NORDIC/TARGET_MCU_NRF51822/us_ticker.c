@@ -127,7 +127,7 @@ void rtc1_stop(void)
  * @return Current RTC1 counter as a 64-bit value with 56-bit precision (even
  *         though the underlying counter is 24-bit)
  */
-static inline uint64_t rtc1_getCounter64(void)
+static inline uint64_t _rtc1_getCounter64(void)
 {
     if (NRF_RTC1->EVENTS_OVRFLW) {
         overflowCount++;
@@ -137,6 +137,11 @@ static inline uint64_t rtc1_getCounter64(void)
     return ((uint64_t)overflowCount << 24) | NRF_RTC1->COUNTER;
 }
 
+uint64_t rtc1_getCounter64(void)
+{
+    return _rtc1_getCounter64();
+}
+
 /**
  * @brief Function for returning the current value of the RTC1 counter.
  *
@@ -144,7 +149,7 @@ static inline uint64_t rtc1_getCounter64(void)
  */
 static inline uint32_t rtc1_getCounter(void)
 {
-    return rtc1_getCounter64();
+    return _rtc1_getCounter64();
 }
 
 /**
@@ -185,7 +190,7 @@ uint32_t us_ticker_read()
 
     /* Return a pseudo microsecond counter value. This is only as precise as the
      * 32khz low-freq clock source, but could be adequate.*/
-    return RTC_UNITS_TO_MICROSECONDS(rtc1_getCounter64());
+    return RTC_UNITS_TO_MICROSECONDS(_rtc1_getCounter64());
 }
 
 /**
@@ -229,7 +234,7 @@ void us_ticker_set_interrupt(timestamp_t timestamp)
      * additional 32 bits. RTC_UNITS_TO_MICROSECONDS() converts this into
      * microsecond units (in 64-bits).
      */
-    const uint64_t currentTime64 = RTC_UNITS_TO_MICROSECONDS(rtc1_getCounter64());
+    const uint64_t currentTime64 = RTC_UNITS_TO_MICROSECONDS(_rtc1_getCounter64());
     uint64_t timestamp64 = (currentTime64 & ~(uint64_t)0xFFFFFFFFULL) + timestamp;
     if (((uint32_t)currentTime64 > 0x80000000) && (timestamp < 0x80000000)) {
         timestamp64 += (uint64_t)0x100000000ULL;
