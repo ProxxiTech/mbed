@@ -89,6 +89,12 @@ static void init_serial() {
 #if DEVICE_SERIAL
     if (stdio_uart_inited) return;
     serial_init(&stdio_uart, STDIO_UART_TX, STDIO_UART_RX);
+
+#if DEVICE_SERIAL_FC
+    serial_set_flow_control(&stdio_uart, FlowControlRTSCTS, RTS_PIN_NUMBER, CTS_PIN_NUMBER);
+#endif
+
+    serial_baud(&stdio_uart, 250000);
 #endif
 }
 
