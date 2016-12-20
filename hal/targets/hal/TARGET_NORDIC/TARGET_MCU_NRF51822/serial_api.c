@@ -280,7 +280,9 @@ void serial_set_flow_control(serial_t *obj, FlowControl type, PinName rxflow, Pi
 
     if (type == FlowControlRTSCTS || type == FlowControlRTS) {
         NRF_GPIO->DIR |= (1<<rxflow);
-        pin_mode(rxflow, PullUp);
+        // Since RTS is usually asserted,
+        // removing the pull as it wastes about 200 uA.
+        /* pin_mode(rxflow, PullUp); */
         obj->uart->PSELRTS = rxflow;
 
         obj->uart->CONFIG |= 0x01; // Enable HWFC
@@ -288,7 +290,9 @@ void serial_set_flow_control(serial_t *obj, FlowControl type, PinName rxflow, Pi
 
     if (type == FlowControlRTSCTS || type == FlowControlCTS) {
         NRF_GPIO->DIR &= ~(1<<txflow);
-        pin_mode(txflow, PullUp);
+        // Since CTS is usually asserted,
+        // removing the pull as it wastes about 200 uA.
+        /* pin_mode(txflow, PullUp); */
         obj->uart->PSELCTS = txflow;
 
         obj->uart->CONFIG |= 0x01; // Enable HWFC;
