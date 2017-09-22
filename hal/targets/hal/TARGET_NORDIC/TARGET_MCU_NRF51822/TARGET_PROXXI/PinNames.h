@@ -97,22 +97,25 @@ typedef enum {
     P0_29 = p29,
     P0_30 = p30,
 
-    LED1    = p18,
-    LED2    = p17,
+    LED1    = p1,
+    LED2    = p2,
 //    LED3    = p23,
 //    LED4    = p24,
     LED_RED = LED1,
     LED_GREEN = LED2,
 
-    BUTTON1 = p20,
-    BUTTON2 = p19,
+    LED_YELLOW_0 = p9,
+    LED_YELLOW_1 = p8,
+
+    BUTTON1 = p0,
+//    BUTTON2 = p19,
 //    BUTTON3 = p19,
 //    BUTTON4 = p20,
 
     RX_PIN_NUMBER  = p23,
     TX_PIN_NUMBER  = p24,
-    CTS_PIN_NUMBER = p25,
-    RTS_PIN_NUMBER = p28,
+    CTS_PIN_NUMBER = p22,
+    RTS_PIN_NUMBER = p21,
 
     // mBed interface Pins
     USBTX = TX_PIN_NUMBER,
