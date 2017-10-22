@@ -60,6 +60,7 @@ public:
      *  @param name (optional) A string to identify the object
      */
     InterruptIn(PinName pin);
+    InterruptIn(PinName pin, PinMode pull);
     virtual ~InterruptIn();
 
      int read();
