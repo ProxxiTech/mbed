@@ -32,8 +32,7 @@ InterruptIn::InterruptIn(PinName pin, PinMode pull) :   gpio(),
                                                         _rise(),
                                                         _fall() {
     gpio_irq_init(&gpio_irq, pin, (&InterruptIn::_irq_handler), (uint32_t)this);
-    gpio_init_in(&gpio, pin);
-    gpio_mode(&gpio, pull);
+    gpio_init_in_ex(&gpio, pin, pull);
 }
 
 InterruptIn::~InterruptIn() {
